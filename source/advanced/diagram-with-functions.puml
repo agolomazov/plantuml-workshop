@@ -1,0 +1,28 @@
+@startuml
+
+!include funcs.puml
+
+title Publish(er) Jobs Workers (Successful Block Copy)
+
+participant "Orchestra" as O
+participant "Storage" as S
+participant "Publisher" as P
+
+activate O
+P -> P : Startup (celeryd -Q queue_name)
+activate P
+
+P -> O : $quote('get next publish jib from queue')
+O --> P : $quote('next publish job is')
+
+note right : <b>concurrency</b> jobs can be threated\nsimulatues
+P -> P : $bold('Launch new block copy')
+P -> S : $quote('read media from medias path')
+
+activate S
+S --> P : $quote('read block 1/N from media')
+P --> P : $quote('write block 1 / N to local web path')
+P --> O : $quote('update job status & status')
+S --> P
+
+@enduml

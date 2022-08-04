@@ -1,0 +1,11 @@
+@startuml "Example diagram"
+
+actor "Брат 1" as br1
+actor "Брат 2" as br2
+
+note top of br1: В чем сила, брат?
+note top of br2: В диаграммах!
+
+br1 -> br2
+
+@enduml

@@ -1,0 +1,41 @@
+@startuml "Идентификация клиента"
+
+<style>
+legend {
+  BackgroundColor Yellow
+  Padding 20
+  Margin 20 10 
+}
+</style>
+
+title "Идентификация клиента"
+
+!include styles.puml
+
+actor "Кассир" as k
+participant "ClubPro" as cp
+
+legend top left
+  <font size=30 color=gray><w>Легенда
+
+  * **Кассир** - пользователь системы
+  * **ClubPro** - Система клубных льгот
+end legend
+
+autonumber
+k -> cp : Запрос идентификации клиента по клубной карте
+alt#Gold #LightGreen Идентификация клиента
+  cp -> k : Идентификация успешна
+else #Orange Отказ по причине отсутсвия связи
+  group #LightGray Повторный запрос идентификации
+    k -> cp : Отправка запроса идентификации
+    loop #Pink 3 попытки
+      k -> cp : Запрос идентификации
+    end
+    k -> cp : Окончание отправки запросов
+  end
+else #Pink Другой тип отказа от идентификации
+  cp -> k : Обратитесь в службу\nподдержки (**Ошибка 100011**)
+end alt
+
+@enduml

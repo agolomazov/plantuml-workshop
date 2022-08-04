@@ -1,0 +1,38 @@
+@startuml Payment
+
+title Выплата платежей - статусы транзакций
+footer Рис 1. Переходы по состояниям платежей системы
+
+skinparam {
+  skinparam defaultTextAlignment<<center>> center
+  StateFontSize 16
+  StateFontStyle bold
+  FooterFontSize 18
+  FooterFontColor #green
+  FooterFontStyle bold
+}
+
+hide empty description
+
+INITIAL: Платеж создан
+LIMITS_OVERFLOW: Лимиты превышены
+LIMITS_OK: Лимиты пройдены
+WAITING_SMS_CONFIRMATION: Ожидание OTP
+READY_TO_SENT: Платеж готов к отправке\nв платежную систему
+SENT_TO_PAYSYSTEM: Отправлен в платежную систему
+DECLINED_BY_PAYSYSTEM: Платеж отклонен\nплатежной системой
+PAID: Выплачен
+
+[*] -> INITIAL
+INITIAL -down[#red]-> LIMITS_OVERFLOW #Pink
+LIMITS_OVERFLOW -down[#red]-> [*]: Платеж не удалось\nвыполнить
+INITIAL -> LIMITS_OK: Лимиты пройдены
+LIMITS_OK -down-> WAITING_SMS_CONFIRMATION: Ожидание подтверждения\nпо sms
+WAITING_SMS_CONFIRMATION -down-> READY_TO_SENT: Можно отправлять в\nплатежную систему
+READY_TO_SENT -down-> SENT_TO_PAYSYSTEM: Платеж зарегистрирован
+READY_TO_SENT -down[#red]-> DECLINED_BY_PAYSYSTEM #Pink: Платеж отклонен
+DECLINED_BY_PAYSYSTEM -down[#red]-> [*]: Платеж отклонен
+SENT_TO_PAYSYSTEM -down-> PAID #LightGreen
+PAID -down-> [*]: Платеж выполнен
+
+@enduml

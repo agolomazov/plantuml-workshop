@@ -1,0 +1,52 @@
+@startuml "Отправка запроса на сервер"
+title Отправка запроса на сервер
+
+(*) --> "Заходим на страницу с онбордингом"
+--> "Открывается онбординг"
+
+if "Мы авторизованы" then
+  ->[true] "ЗагрузкаСтраницы()"
+
+  if "Нужен редирект?" then
+   ->[Нет] "Остаемся на странице"
+
+   if "Запустить доп. проверки?" then
+     -->[Да] "ЗапуститьЛоадер()"
+   else
+     -->[Нет] "ПроверкаПравДоступа()"
+   endif
+
+  else
+   -->[Да] "ЗапуститьЛоадер()"
+  endif
+
+  if "Это Post запрос?" then
+    -->[Да] "СозданиеСтраницы()"
+    --> "Стрница перезагружается" as render
+    --> "Редирект на список страниц"
+  else
+    -->[Нет] "ПолучитьСтраницу(GuidСтраницы)"
+    --> render
+  endif
+
+else
+  -->[false] "Редирект на список страниц"
+endif
+
+if "Do redirect?" then
+ ->[Да] "redirect request"
+ --> ==BEFORE_DESTROY===
+else
+ if "Do Forward?" then
+  -left->[Да] "Forward request"
+  --> ==BEFORE_DESTROY===
+ else
+  -right->[Нет] "Render page template"
+  --> ==BEFORE_DESTROY===
+ endif
+endif
+
+--> "Page.onDestroy()"
+-->(*)
+
+@enduml

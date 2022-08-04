@@ -1,0 +1,10 @@
+@startuml
+!function $quote($msg) 
+  !return "<< " + $msg + " >>"
+!endfunction
+
+' Жирный текст
+!function $bold($msg)
+  !return "<b>" + $msg + "</b>"
+!endfunction
+@enduml

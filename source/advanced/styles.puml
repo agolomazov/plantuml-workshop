@@ -1,0 +1,77 @@
+@startuml style
+
+skinparam {
+    'monochrome true
+    'actorStyle awesome
+    ActorFontColor Red
+    BoxPadding 10
+    Roundcorner 10
+    Maxmessagesize 300
+    DatabaseBackgroundColor Wheat
+    DatabaseBorderColor IndianRed
+    DatabaseBorderThickness 2
+    DatabaseFontColor Black
+    DatabaseFontSize 14
+    QueueBackgroundColor Wheat
+    QueueBorderColor IndianRed
+    QueueBorderThickness 2
+    QueueFontColor Black
+    QueueFontSize 14
+}
+
+
+skinparam title {
+    BorderRoundCorner 10
+    BorderThickness 1.5
+    BorderColor Firebrick
+    BackgroundColor MistyRose
+    FontSize 25
+}
+
+skinparam sequence {
+    BackgroundColor White
+    ArrowThickness 1.5
+    ParticipantFontSize 14
+    ParticipantPadding 30
+    BoxBackgroundColor Azure
+    MessageAlign center
+    ArrowColor DarkBlue
+    ArrowFontColor Black
+    LifeLineBorderColor DarkGray
+    LifeLineBackgroundColor SlateGray
+    GroupBackgroundColor LightGray
+    GroupBorderColor DimGray
+    ActorBackgroundColor Moccasin
+    ActorBorderColor Maroon
+    ActorFontColor Gray
+    ParticipantBackgroundColor PeachPuff
+    ParticipantBorderColor Sienna
+    ParticipantFontColor Black
+}
+
+skinparam note {
+    BackgroundColor BlanchedAlmond
+    BorderColor SandyBrown
+}
+
+skinparam participant {
+    BorderRoundCorner 0
+    BackgroundColor White
+}
+
+skinparam alt {
+    BackgroundColor Gray
+}
+
+skinparam group {
+    BackgroundColor Gray
+}
+
+skinparam legend {
+    Padding 20
+    Margin 20
+}
+
+hide footbox
+
+@enduml

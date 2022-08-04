@@ -1,0 +1,8 @@
+@startuml
+
+!includeurl https://raw.githubusercontent.com/NEKharichkin/analyst-boost/main/style_plantuml_file.puml
+
+
+'title "Some title"
+
+@enduml

@@ -1,0 +1,32 @@
+@startuml slide_function
+
+!function $func_double($n)
+  !return $n + $n
+!endfunction
+
+!function $func_x6($n)
+  !return 6 * $n
+!endfunction
+
+!function $concat($a, $b)
+  !return "a <-- b : " + "Concatination via concat: " + $a + $b
+!endfunction
+
+!$arg_a = 2
+!$arg_b = 5
+!$arg_sum = $arg_a + $arg_b
+
+participant Alice as a
+participant Bob as b
+
+a --> b : The double of $arg_a is $func_double($arg_a)
+a --> b : $func_double('\nThis work with strings')
+a --> b : $arg_a * 6 = $func_x6($arg_a) and Arg_sum = $arg_sum
+$concat($arg_a, $arg_b)
+!if ($arg_a == 2) && ($func_x6($arg_a) >= 12)
+  a -> b : arg_a = $arg_a, func_x6(arg_a) = $func_x6($arg_a)
+!else
+  a -> b : ERROR!
+!endif
+
+@enduml

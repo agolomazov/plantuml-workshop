@@ -1,0 +1,65 @@
+@startuml "Sequence diagram for process"
+
+header Диаграмма процесса транскрибации видео
+
+autonumber
+
+box "Фронтенд" #LightCyan
+participant UI
+end box
+box "Бэкенд" #LightSkyBlue
+participant Customer
+participant Orders
+participant Menu
+participant Payments
+end box
+box "MQ" #LightGrey
+participant Gateway
+end box
+== anonimus user ==
+
+group#Gold #LightGreen **Если мы не вошли в систему**
+UI -> Menu : GET  /products
+... 1 минуту спустя...
+Menu -> UI : 200
+note left: Получен список товаров
+
+else #Pink **Если мы авторизованы**
+UI -> Menu : GET  /products/:id
+Menu -> UI : 200
+UI -> Orders : POST /order
+Orders -> Menu : GET /product:id
+Menu -> Orders : 200
+Orders -> UI : 201 created
+end
+== add item ==
+
+group #Pink success case
+UI -> Orders : POST /order:id/item
+Orders -> Menu : GET /product:id
+Menu -> Orders : 200
+Orders -> UI : 201 created
+end
+
+== increase quantity ==
+
+UI -> Orders : PUT /order:id/item:id
+Orders -> UI : 204 no content
+== remove order ==
+
+UI -> Orders : DELETE /order:id
+Orders -> UI: 204 no content
+
+
+== pay ==
+UI -> Payments : POST /payment
+Payments -> Gateway : POST /payment
+Gateway -> Payments : 200
+Payments -> Gateway : PUT /payment:id
+Gateway -> Payments : 204 no content
+destroy Gateway
+
+== anonimus user ==
+UI -> Customer : POST /customer
+
+@enduml
